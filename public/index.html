@@ -16,7 +16,7 @@
 
     // ####################################
 
-    const state = {
+    let state = {
         time: new Date(),
         lots: [
             {
@@ -36,7 +36,7 @@
 
     // ####################################
 
-    function App ({state}) {
+    function App ({ state }) {
         const app = document.createElement('div')
         app.className = 'app'
 
@@ -65,11 +65,26 @@
     }
 
     function Clock (props) {
-        const clock = document.createElement('div')
-        clock.className = 'clock'
-        clock.innerHTML = props.time.toLocaleTimeString()
+        const node = document.createElement('div')
+        node.className = 'clock'
 
-        return clock
+        const value = document.createElement('span')
+        value.className = 'value'
+        value.innerText = props.time.toLocaleString()
+
+        node.append(value)
+
+        const icon = document.createElement('span')
+
+        if (props.time.getHours() >= 7 && props.time.getHours() <= 21) {
+            icon.className = 'icon day'
+        } else {
+            icon.className = 'icon night'
+        }
+
+        node.append(icon)
+
+        return node
     }
 
     function Lots ({lots}) {
@@ -107,14 +122,30 @@
 
     // ####################################
 
-    render(
-        App({ state }),
-        document.getElementById('root')
-    )
+    function renderView (state) {
+        render(
+            App({ state }),
+            document.getElementById('root')
+        )
+    }
+
+    renderView(state)
+
+    // ####################################
+
+    setInterval(()=> {
+        state = {
+            ...state,
+            time: new Date()
+        }
+
+        renderView(state)
+    }, 1000)
 
     // ####################################
 
     function  render (newDom, realDomRoot) {
+        realDomRoot.innerHTML = ''
         realDomRoot.append(newDom)
     }
 
