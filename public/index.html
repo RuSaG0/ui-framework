@@ -324,11 +324,10 @@
         }
 
         if (typeof virtualNode !== 'object' && virtualNode.nodeValue !== realNode.nodeValue) {
-            realNode.nodeValue = virtualNode.nodeValue
+            realNode.nodeValue = virtualNode
         }
 
         // Sync child nodes
-
         const virtualChildren = virtualNode.props ? virtualNode.props.children || [] : []
         const realChildren = realNode.childNodes
 
@@ -363,11 +362,10 @@
         }
     }
 
-    function createRealNodeByVirtual(virtual) {
+    function createRealNodeByVirtual (virtual) {
         if (typeof virtual !== 'object') {
             return document.createTextNode('')
         }
-
         return document.createElement(virtual.type)
     }
 
