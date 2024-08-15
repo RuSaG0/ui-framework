@@ -310,7 +310,7 @@
         // Sync element
         if (virtualNode.props) {
             Object.entries(virtualNode.props).forEach(([name, value]) => {
-                if (name === 'children' && name === 'key') {
+                if (name === 'children' || name === 'key') {
                    return
                 }
                 if (realNode[name] !== value) {
